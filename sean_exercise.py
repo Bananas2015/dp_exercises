@@ -82,7 +82,38 @@ def find_neighbors(row_index, col_index):
     return (nw_stuff, ne_stuff, sw_stuff)
 
 
-print find_neighbors(8,1)
+# print find_neighbors(8,1)
 
-for z in dp_table:
-    print z
+for r in range(1,9):
+    for c in range(1,9):
+        (nw_stuff, ne_stuff, sw_stuff) = find_neighbors(r, c)
+        option1_money = dp_table[r-1][c]
+        if nw_stuff == 'B':
+            option1_money += 10000
+        elif nw_stuff == 'W':
+            option1_money -= 20000
+
+        if ne_stuff == 'B':
+            option1_money += 10000
+        elif ne_stuff == 'W':
+            option1_money -= 20000
+
+        option2_money = dp_table[r][c-1]
+        if nw_stuff == 'B':
+            option2_money += 10000
+        elif nw_stuff == 'W':
+            option2_money -= 20000
+
+        if sw_stuff == 'B':
+            option2_money += 10000
+        elif sw_stuff == 'W':
+            option2_money -= 20000
+
+        if option2_money >= option1_money:
+            dp_table[r][c] = option2_money
+        else:
+            dp_table[r][c] = option1_money
+
+
+for row in dp_table:
+    print row
